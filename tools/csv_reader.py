@@ -1,13 +1,16 @@
-import csv
+import json
 
-
-def read_csv(file_name: str):
-    with open(file_name, newline="") as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=",", quotechar="|")
-        data = [s for s in spamreader]
-        dict_data = [
-            {data[0][j]: v for j, v in enumerate(d)}
-            for i, d in enumerate(data)
-            if i > 0 and d != []
+def read_json(file_name: str):
+    with open(file_name) as file:
+        data = json.load(file)
+        entity = [
+            {
+                "symbol": data["elements"][int(data["nucs"][i]["z"])],
+                "z": float(data["nucs"][i]["z"]),
+                "n": float(data["nucs"][i]["n"]),
+                "isStable": 1.0 if "h" in data["nucs"][i] and data["nucs"][i]["h"] == "stable" else 0.0,
+                # "result": data["nucs"][i][],
+            }
+            for i in range(len(data["nucs"]))
         ]
-        return dict_data
+        return entity
