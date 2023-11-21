@@ -1,5 +1,5 @@
 import random
-from generating_models.generate_model import preprocessData
+from generating_models.core.data_preparation import preprocessData
 
 
 from tools.csv_reader import read_json
